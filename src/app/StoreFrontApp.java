@@ -49,7 +49,7 @@ public class StoreFrontApp {
         while (!exit) {        	
         	// Here we print the welcome message and the
         	// menu options for the user to choose from.
-            System.out.println("Welcome to the Store!");
+            System.out.println("Welcome to the store known across the lands as, The Legendary Armory!");
             System.out.println("Select an option:");
             System.out.println("1. View Products");
             System.out.println("2. Purchase a Product");
@@ -80,7 +80,7 @@ public class StoreFrontApp {
                     break;
                 case 4:
                 	// Prints an exit message and sets exit = true, which exits the loop.
-                    System.out.println("Exiting Store. Goodbye!");
+                    System.out.println("Thank you for visiting! You are now exiting The Legendary Armory. Goodbye!");
                     exit = true;
                     break;
                 default:

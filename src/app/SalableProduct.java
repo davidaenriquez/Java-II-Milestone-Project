@@ -81,7 +81,7 @@ public class SalableProduct {
 
     /**
      * Setter method which sets a new
-     * description for the product
+     * price for the product
      * @param newPrice as parameter
      */
     public void setPrice(double newPrice) {
@@ -90,7 +90,7 @@ public class SalableProduct {
     
     /**
      * Setter method which sets a new
-     * description for the product
+     * quantity for the product
      * @param newQuantity as parameter
      */
     public void setQuantity(int newQuantity) {

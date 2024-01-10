@@ -31,27 +31,23 @@ public class InventoryManager {
      * Initializes the store with predefined products by adding them to the inventory.
      */
     public void initializeStore() {
-        SalableProduct product1 = new SalableProduct();
-        product1.setName("Product 1");
-        product1.setDescription("This is the first product.");
-        product1.setPrice(10.99);
-        product1.setQuantity(20);
-
-        SalableProduct product2 = new SalableProduct();
-        product2.setName("Product 2");
-        product2.setDescription("This is the second product.");
-        product2.setPrice(15.99);
-        product2.setQuantity(15);
-
-        SalableProduct product3 = new SalableProduct();
-        product3.setName("Product 3");
-        product3.setDescription("This is the third product.");
-        product3.setPrice(19.99);
-        product3.setQuantity(30);
-
-        addToInventory(product1);
-        addToInventory(product2);
-        addToInventory(product3);
+    	// Create instances of Weapon, Armor, and Health
+        Weapon weapon1 = new Weapon("Sword", "A sharp sword", 49.99, 10, 20);
+        Weapon weapon2 = new Weapon("Axe", "A powerful axe", 59.99, 8, 25);
+        
+        Armor armor1 = new Armor("Steel Armor", "Durable steel armor", 99.99, 5, 30);
+        Armor armor2 = new Armor("Leather Armor", "Light leather armor", 39.99, 15, 15);
+        
+        Health health1 = new Health("Health Potion", "Restores health", 9.99, 30, 50);
+        Health health2 = new Health("Elixir", "Powerful healing elixir", 19.99, 20, 100);
+        
+        // Adding the instances to the inventory
+        addToInventory(weapon1);
+        addToInventory(weapon2);
+        addToInventory(armor1);
+        addToInventory(armor2);
+        addToInventory(health1);
+        addToInventory(health2);
     }
 
     /**
