@@ -94,4 +94,19 @@ public class ShoppingCart {
     public int getCartSize() {
         return cartItems.size();
     }
+    
+    /**
+     * Returns the contents of the shopping cart.
+     * @return A list of SalableProduct objects representing the contents of the cart.
+     */
+    public List<SalableProduct> returnCartContents() {
+        return cartItems;
+    }
+    
+    /**
+     * Empties the contents of the shopping cart.
+     */
+    public void emptyCart() {
+        cartItems.clear();
+    }
 }

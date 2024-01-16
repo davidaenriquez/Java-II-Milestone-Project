@@ -7,6 +7,7 @@
  * Grand Canyon University CST-239 Milestone Guide
  */
 package app;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +20,8 @@ public class StoreFrontApp {
 	/**
      * The main method serves as the entry point of the application.
      * It displays a menu allowing users to interact with the store's functionalities.
-     * @param
+     *
+     * @param args Command-line arguments (not used in this application).
      */
     public static void main(String[] args) {
     	// Here we create an instance of the InventoryManager
@@ -54,7 +56,10 @@ public class StoreFrontApp {
             System.out.println("1. View Products");
             System.out.println("2. Purchase a Product");
             System.out.println("3. Cancel a Purchase");
-            System.out.println("4. Exit");
+            System.out.println("4. View Cart");
+            System.out.println("5. Empty Cart"); // Added option to view the cart
+            System.out.println("6. Compare Weapons"); // Added option to compare weapons
+            System.out.println("7. Exit");
             
             // Here we read the user's integer input
             // from the console to determine their choice.
@@ -79,6 +84,17 @@ public class StoreFrontApp {
                     cancelPurchase(inventoryManager, cart, userInput);
                     break;
                 case 4:
+                	// View Cart option
+                    viewCart(cart);
+                    break;
+                case 5:
+                	// Empty Cart option
+                    emptyCart(cart);
+                    break;
+                case 6:
+                	compareWeapons(inventoryManager, userInput);
+                    break;
+                case 7:
                 	// Prints an exit message and sets exit = true, which exits the loop.
                     System.out.println("Thank you for visiting! You are now exiting The Legendary Armory. Goodbye!");
                     exit = true;
@@ -95,10 +111,10 @@ public class StoreFrontApp {
     }
     
     /**
-     * This method declares a public, static method named
-     * displayAvailableProducts that takes an InventoryManager
-     * object as an argument. It will display product information.
+     * Displays the available products in the inventory.
+     *
      * @param inventoryManager The InventoryManager to retrieve product information.
+     * @see InventoryManager
      */
     public static void displayAvailableProducts(InventoryManager inventoryManager) {
     	// We retrieve a list of SalableProduct objects
@@ -127,11 +143,13 @@ public class StoreFrontApp {
     }
     
     /**
-     * This method declares a public static method named purchaseProduct
-     * that takes in an InventoryManager, a ShoppingCart, and a Scanner as parameters.
+     * Handles the purchase of a product by adding it to the shopping cart.
+     *
      * @param inventoryManager Represents the manager responsible for managing the inventory of products.
-     * @param cart Represents the shopping cart where purchased items are stored.
-     * @param userInput Represents the Scanner object used to receive user input.
+     * @param cart             Represents the shopping cart where purchased items are stored.
+     * @param userInput        Represents the Scanner object used to receive user input.
+     * @see InventoryManager
+     * @see ShoppingCart
      */
     public static void purchaseProduct(InventoryManager inventoryManager, ShoppingCart cart, Scanner userInput) {
     	
@@ -157,7 +175,6 @@ public class StoreFrontApp {
         // a message indicating an invalid product choice.
         if (productChoice >= 1 && productChoice <= products.size()) {
             SalableProduct selectedProduct = products.get(productChoice - 1);
-            inventoryManager.addToInventory(selectedProduct);
             cart.addProduct(selectedProduct);
             System.out.println("Purchase completed: " + selectedProduct.getName() + " purchased.");
         } else {
@@ -172,11 +189,13 @@ public class StoreFrontApp {
     }
 
     /**
-     * This method declares a public static method named cancelPurchase
-     * that takes in an InventoryManager, a ShoppingCart, and a Scanner as parameters.
+     * Cancels a purchase by removing the selected product from the shopping cart and adding it back to the inventory.
+     *
      * @param inventoryManager The InventoryManager to manage product inventory.
-     * @param cart The ShoppingCart to manage purchased items.
-     * @param userInput The Scanner for user input.
+     * @param cart             The ShoppingCart to manage purchased items.
+     * @param userInput        The Scanner for user input.
+     * @see InventoryManager
+     * @see ShoppingCart
      */
     public static void cancelPurchase(InventoryManager inventoryManager, ShoppingCart cart, Scanner userInput) {
     	
@@ -209,5 +228,108 @@ public class StoreFrontApp {
         // going back to the main menu after the purchase process.
         System.out.println("Press any key to return to the main menu.");
         new Scanner(System.in).nextLine();
+    }
+    
+    /**
+     * Displays the contents of the shopping cart.
+     *
+     * @param cart The ShoppingCart to be displayed.
+     * @see ShoppingCart
+     */
+    private static void viewCart(ShoppingCart cart) {
+        System.out.println("Shopping Cart Contents:");
+        cart.viewCart();
+        System.out.println("Press any key to return to the main menu.");
+        new Scanner(System.in).nextLine();
+    }
+    
+    /**
+     * Empties the contents of the shopping cart.
+     *
+     * @param cart The ShoppingCart to be emptied.
+     * @see ShoppingCart
+     */
+    private static void emptyCart(ShoppingCart cart) {
+        cart.emptyCart();
+        System.out.println("Shopping Cart emptied. You have now returned to the main menu!");
+        // No need to wait for user input here, as it will return to the main menu directly.
+    }
+    
+    /**
+     * Compares weapons based on their names and prints the results to the console.
+     *
+     * @param inventoryManager The InventoryManager containing the list of weapons.
+     * @param userInput        The Scanner object used to receive user input.
+     */
+    public static void compareWeapons(InventoryManager inventoryManager, Scanner userInput) {
+        // Retrieve the list of products from the inventory manager
+        List<SalableProduct> products = inventoryManager.getInventory();
+        
+        // Filter the products to include only weapons
+        List<Weapon> weapons = filterWeapons(products);
+
+        System.out.println("Weapons for Comparison:");
+        
+        // Display the list of weapons for the user to choose from
+        for (int i = 0; i < weapons.size(); i++) {
+            System.out.println((i + 1) + ". " + weapons.get(i).getName());
+        }
+
+        System.out.println("Enter the first weapon number to compare:");
+        int firstWeaponChoice = userInput.nextInt();
+        System.out.println("Enter the second weapon number to compare:");
+        int secondWeaponChoice = userInput.nextInt();
+
+        // Check if the user's choices are valid
+        if (isValidWeaponChoice(firstWeaponChoice, weapons) && isValidWeaponChoice(secondWeaponChoice, weapons)) {
+            Weapon weapon1 = weapons.get(firstWeaponChoice - 1);
+            Weapon weapon2 = weapons.get(secondWeaponChoice - 1);
+
+            int comparisonResult = weapon1.compareTo(weapon2);
+
+            // Display the comparison results
+            if (comparisonResult < 0) {
+                System.out.println(weapon1.getName() + " comes before " + weapon2.getName() + " in alphabetical order.");
+            } else if (comparisonResult > 0) {
+                System.out.println(weapon1.getName() + " comes after " + weapon2.getName() + " in alphabetical order.");
+            } else {
+                System.out.println(weapon1.getName() + " and " + weapon2.getName() + " have the same name.");
+            }
+        } else {
+            System.out.println("Invalid weapon choice.");
+        }
+
+        // Wait for user input before returning to the main menu
+        System.out.println("Press any key to return to the main menu.");
+        new Scanner(System.in).nextLine();
+    }
+
+    /**
+     * Filters the list of products to include only weapons.
+     *
+     * @param products The list of products to be filtered.
+     * @return A list containing only weapons.
+     */
+    private static List<Weapon> filterWeapons(List<SalableProduct> products) {
+        List<Weapon> weapons = new ArrayList<>();
+        
+        // Iterate through the products and add weapons to the filtered list
+        for (SalableProduct product : products) {
+            if (product instanceof Weapon) {
+                weapons.add((Weapon) product);
+            }
+        }
+        return weapons;
+    }
+
+    /**
+     * Checks if the user's choice of weapon is valid.
+     *
+     * @param choice  The user's choice.
+     * @param weapons The list of weapons to choose from.
+     * @return True if the choice is valid, false otherwise.
+     */
+    private static boolean isValidWeaponChoice(int choice, List<Weapon> weapons) {
+        return choice >= 1 && choice <= weapons.size();
     }
 }

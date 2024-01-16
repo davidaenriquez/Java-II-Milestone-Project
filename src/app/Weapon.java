@@ -13,7 +13,7 @@ package app;
  * which includes specific properties related to weapons.
  * This Weapon class extends the SalableProduct class.
  */
-public class Weapon extends SalableProduct {
+public class Weapon extends SalableProduct implements Comparable<Weapon> {
 	// Properties
     private int damage; // Represents the damage inflicted by the weapon
     
@@ -51,5 +51,20 @@ public class Weapon extends SalableProduct {
      */
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+    
+    /**
+     * We are implementing the compareTo method from the
+     * Comparable interface for the Weapon class. The
+     * Comparable interface in Java is used to define a
+     * natural order for a class, allowing instances of
+     * that class to be compared and sorted.
+     *
+     * @param other The Weapon object to compare to.
+     * @return returns the result of the comparison based on weapon names.
+     */
+    @Override
+    public int compareTo(Weapon other) {
+        return this.getName().compareToIgnoreCase(other.getName());
     }
 }
