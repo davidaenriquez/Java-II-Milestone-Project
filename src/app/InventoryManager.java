@@ -7,8 +7,12 @@
  * Grand Canyon University CST-239 Milestone Guide
  */
 package app;
+import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * The InventoryManager class represents a object
@@ -28,26 +32,42 @@ public class InventoryManager {
     }
     
     /**
-     * Initializes the store with predefined products by adding them to the inventory.
+     * Saves the current inventory to a JSON file.
+     *
+     * @param filename The name of the JSON file.
+     */
+    public void saveToJsonFile(String filename) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File(filename), inventory);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately (log, throw, etc.)
+        }
+    }
+
+    /**
+     * Loads inventory from a JSON file.
+     *
+     * @param filename The name of the JSON file.
+     */
+    public void loadFromJsonFile(String filename) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<SalableProduct> items = objectMapper.readValue(new File(filename), new TypeReference<List<SalableProduct>>() {});
+            this.inventory = items;
+        } catch (IOException e) {
+            // Handle general file I/O errors
+            System.err.println("Error reading inventory from JSON file: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Initializes the store by loading inventory data from a JSON file.
+     * The default filename used is "inventory.json".
      */
     public void initializeStore() {
-    	// Create instances of Weapon, Armor, and Health
-        Weapon weapon1 = new Weapon("Sword", "A sharp sword", 49.99, 10, 20);
-        Weapon weapon2 = new Weapon("Axe", "A powerful axe", 59.99, 8, 25);
-        
-        Armor armor1 = new Armor("Steel Armor", "Durable steel armor", 99.99, 5, 30);
-        Armor armor2 = new Armor("Leather Armor", "Light leather armor", 39.99, 15, 15);
-        
-        Health health1 = new Health("Health Potion", "Restores health", 9.99, 30, 50);
-        Health health2 = new Health("Elixir", "Powerful healing elixir", 19.99, 20, 100);
-        
-        // Adding the instances to the inventory
-        addToInventory(weapon1);
-        addToInventory(weapon2);
-        addToInventory(armor1);
-        addToInventory(armor2);
-        addToInventory(health1);
-        addToInventory(health2);
+        // Use the JSON file
+        loadFromJsonFile("inventory.json");
     }
 
     /**

@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Sword",
+        "description": "A sharp sword",
+        "price": 49.99,
+        "quantity": 10
+    },
+    {
+        "name": "Axe",
+        "description": "A powerful axe",
+        "price": 59.99,
+        "quantity": 8
+    },
+    {
+        "name": "Steel Armor",
+        "description": "Durable steel armor",
+        "price": 99.99,
+        "quantity": 5
+    },
+    {
+        "name": "Leather Armor",
+        "description": "Light leather armor",
+        "price": 39.99,
+        "quantity": 15
+    },
+    {
+        "name": "Health Potion",
+        "description": "Restores health",
+        "price": 9.99,
+        "quantity": 30
+    },
+    {
+        "name": "Elixir",
+        "description": "Powerful healing elixir",
+        "price": 19.99,
+        "quantity": 20
+    }
+]

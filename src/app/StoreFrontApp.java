@@ -24,33 +24,33 @@ public class StoreFrontApp {
      * @param args Command-line arguments (not used in this application).
      */
     public static void main(String[] args) {
-    	// Here we create an instance of the InventoryManager
-    	// class named inventoryManager using the default constructor.
+        // Here we create an instance of the InventoryManager
+        // class named inventoryManager using the default constructor.
         InventoryManager inventoryManager = new InventoryManager();
-        
+
         // Here we invokes the initializeStore() method of the
         // inventoryManager object to set up the initial store state.
         inventoryManager.initializeStore();
-        
+
         // Here we create an instance of the ShoppingCart class
         // named cart using its default constructor to handle
         // items a user purchases.
         ShoppingCart cart = new ShoppingCart();
-        
+
         // We initialize a Scanner object named userInput to
         // handle user input via the console.
         Scanner userInput = new Scanner(System.in);
-        
+
         // Here we declare a boolean variable exit and
         // initializes it to false to control the loop
         // for the menu options.
         boolean exit = false;
-        
+
         // We initiate a loop that continues to display
         // the store menu options as long as exit is false.
-        while (!exit) {        	
-        	// Here we print the welcome message and the
-        	// menu options for the user to choose from.
+        while (!exit) {
+            // Here we print the welcome message and the
+            // menu options for the user to choose from.
             System.out.println("Welcome to the store known across the lands as, The Legendary Armory!");
             System.out.println("Select an option:");
             System.out.println("1. View Products");
@@ -60,11 +60,11 @@ public class StoreFrontApp {
             System.out.println("5. Empty Cart"); // Added option to view the cart
             System.out.println("6. Compare Weapons"); // Added option to compare weapons
             System.out.println("7. Exit");
-            
+
             // Here we read the user's integer input
             // from the console to determine their choice.
             int choice = userInput.nextInt();
-            
+
             // Here we execute different blocks of code based
             // on the user's selected option using a switch statement.
             // Each case inside the switch statement corresponds to
@@ -72,37 +72,37 @@ public class StoreFrontApp {
             // based on the user's selection.
             switch (choice) {
                 case 1:
-                	// Invokes the displayAvailableProducts() method from the InventoryManager.
+                    // Invokes the displayAvailableProducts() method from the InventoryManager.
                     displayAvailableProducts(inventoryManager);
                     break;
                 case 2:
-                	// Invokes the purchaseProduct() method with the inventoryManager, cart, and userInput.
+                    // Invokes the purchaseProduct() method with the inventoryManager, cart, and userInput.
                     purchaseProduct(inventoryManager, cart, userInput);
                     break;
                 case 3:
-                	// Invokes the cancelPurchase() method with the inventoryManager, cart, and userInput.
+                    // Invokes the cancelPurchase() method with the inventoryManager, cart, and userInput.
                     cancelPurchase(inventoryManager, cart, userInput);
                     break;
                 case 4:
-                	// View Cart option
+                    // View Cart option
                     viewCart(cart);
                     break;
                 case 5:
-                	// Empty Cart option
+                    // Empty Cart option
                     emptyCart(cart);
                     break;
                 case 6:
-                	compareWeapons(inventoryManager, userInput);
+                    compareWeapons(inventoryManager, userInput);
                     break;
                 case 7:
-                	// Prints an exit message and sets exit = true, which exits the loop.
+                    // Prints an exit message and sets exit = true, which exits the loop.
                     System.out.println("Thank you for visiting! You are now exiting The Legendary Armory. Goodbye!");
                     exit = true;
                     break;
                 default:
-                	// This default case ensures that if the user enters an
-                	// unexpected value, they receive this message and are
-                	// prompted to make a valid choice.
+                    // This default case ensures that if the user enters an
+                    // unexpected value, they receive this message and are
+                    // prompted to make a valid choice.
                     System.out.println("Invalid choice. Please select a valid option.");
                     break;
             }
