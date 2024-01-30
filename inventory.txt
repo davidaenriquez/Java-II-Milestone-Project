@@ -1,0 +1,6 @@
+Sword,A sharp sword,49.99,10
+Axe,A powerful axe,59.99,8
+Steel Armor,Durable steel armor,99.99,5
+Leather Armor,Light leather armor,39.99,15
+Health Potion,Restores health,9.99,30
+Elixir,Powerful healing elixir,19.99,20

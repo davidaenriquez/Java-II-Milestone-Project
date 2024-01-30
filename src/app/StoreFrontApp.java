@@ -73,7 +73,7 @@ public class StoreFrontApp {
             switch (choice) {
                 case 1:
                     // Invokes the displayAvailableProducts() method from the InventoryManager.
-                    displayAvailableProducts(inventoryManager);
+                	displayAvailableProducts(inventoryManager, userInput);
                     break;
                 case 2:
                     // Invokes the purchaseProduct() method with the inventoryManager, cart, and userInput.
@@ -116,16 +116,16 @@ public class StoreFrontApp {
      * @param inventoryManager The InventoryManager to retrieve product information.
      * @see InventoryManager
      */
-    public static void displayAvailableProducts(InventoryManager inventoryManager) {
-    	// We retrieve a list of SalableProduct objects
-    	// by calling the getInventory() method of the
-    	// provided InventoryManager.
+    public static void displayAvailableProducts(InventoryManager inventoryManager, Scanner userInput) {
+        // Retrieve a list of SalableProduct objects by calling the getInventory() method.
         List<SalableProduct> products = inventoryManager.getInventory();
 
+        // Prompt the user for sorting options.
+        promptSortingOptions(inventoryManager, userInput);
+
+        // Display the sorted products.
         System.out.println("Available Products:");
-        
-        // Here we use a for-each loop to iterate through
-        // the products list and print details of each product:
+
         for (SalableProduct product : products) {
             System.out.println("Product Name: " + product.getName());
             System.out.println("Description: " + product.getDescription());
@@ -133,13 +133,45 @@ public class StoreFrontApp {
             System.out.println("Quantity Available: " + product.getQuantity());
             System.out.println("-----------------------------------");
         }
-        
-        // We output a message prompting the user to return to the main menu.
+
+        // Prompt the user to return to the main menu.
         System.out.println("Press any key to return to the main menu.");
-        
-        // Here we waits for any user input (a key press) before returning
-        // to simulate going back to the main menu after viewing products.
         new Scanner(System.in).nextLine();
+    }
+
+    /**
+     * Prompts the user for sorting options and applies the chosen sorting.
+     *
+     * @param inventoryManager The InventoryManager to perform sorting.
+     * @param userInput        The Scanner object used to receive user input.
+     */
+    private static void promptSortingOptions(InventoryManager inventoryManager, Scanner userInput) {
+        System.out.println("Select sorting option:");
+        System.out.println("1. Sort by Name");
+        System.out.println("2. Sort by Name (Descending)");
+        System.out.println("3. Sort by Price");
+        System.out.println("4. Sort by Price (Descending)");
+        System.out.println("5. Return to Main Menu");
+
+        int sortingChoice = userInput.nextInt();
+
+        switch (sortingChoice) {
+            case 1:
+                inventoryManager.sortByName();
+                break;
+            case 2:
+                inventoryManager.sortByNameDescending();
+                break;
+            case 3:
+                inventoryManager.sortByPrice();
+                break;
+            case 4:
+                inventoryManager.sortByPriceDescending();
+                break;
+            default:
+                // Do nothing for invalid choice or return to the main menu.
+                break;
+        }
     }
     
     /**

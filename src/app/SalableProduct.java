@@ -17,23 +17,25 @@ package app;
  * This class also includes setter methods (setName(), setDescription(),
  * setPrice(), setQuantity()) which are included to modify the values of
  * these properties.
+ *
+ * @param <T> Type of the SalableProduct.
  */
-public class SalableProduct {
-	// Properties
-    String name; // represents the name of the product
-    String description; // represents the description of the product
-    double price; // represents the price of the product
-    int quantity; // represents the quantity of the product available
+public class SalableProduct<T extends Comparable<T>> {
+    // Properties
+    private T name;
+    private String description;
+    private double price;
+    private int quantity;
 
     /**
      * Getter method which returns
      * the name of the product
      * @return returns the name of the product
      */
-    public String getName() {
+    public T getName() {
         return name;
     }
-    
+
     /**
      * Getter method which returns
      * the description of the product
@@ -42,7 +44,7 @@ public class SalableProduct {
     public String getDescription() {
         return description;
     }
-    
+
     /**
      * Getter method which returns
      * the price of the product
@@ -51,7 +53,7 @@ public class SalableProduct {
     public double getPrice() {
         return price;
     }
-    
+
     /**
      * Getter method which returns
      * the quantity of the product
@@ -66,7 +68,7 @@ public class SalableProduct {
      * name for the product
      * @param newName as parameter
      */
-    public void setName(String newName) {
+    public void setName(T newName) {
         this.name = newName;
     }
 
@@ -87,7 +89,7 @@ public class SalableProduct {
     public void setPrice(double newPrice) {
         this.price = newPrice;
     }
-    
+
     /**
      * Setter method which sets a new
      * quantity for the product
