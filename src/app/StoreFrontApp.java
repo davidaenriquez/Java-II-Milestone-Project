@@ -40,7 +40,7 @@ public class StoreFrontApp {
         // We initialize a Scanner object named userInput to
         // handle user input via the console.
         Scanner userInput = new Scanner(System.in);
-
+        
         // Here we declare a boolean variable exit and
         // initializes it to false to control the loop
         // for the menu options.
@@ -184,22 +184,22 @@ public class StoreFrontApp {
      * @see ShoppingCart
      */
     public static void purchaseProduct(InventoryManager inventoryManager, ShoppingCart cart, Scanner userInput) {
-    	
-    	// We retrieve a list of available SalableProduct objects
-    	// by calling the getInventory() method of the provided InventoryManager.
+
+        // We retrieve a list of available SalableProduct objects
+        // by calling the getInventory() method of the provided InventoryManager.
         List<SalableProduct> products = inventoryManager.getInventory();
-        
+
         // We print out the list of available products with
         // their corresponding numbers for selection using a for loop.
         System.out.println("Available Products:");
         for (int i = 0; i < products.size(); i++) {
             System.out.println((i + 1) + ". " + products.get(i).getName());
         }
-        
+
         // We prompts the user to input the number of the desired product for purchase.
         System.out.println("Enter the number of the product to purchase:");
         int productChoice = userInput.nextInt();
-        
+
         // Checks if the user's choice is valid. If valid, we retrieve
         // the selected product from the list, add it to both the
         // inventory and the shopping cart, and provides feedback
@@ -207,12 +207,25 @@ public class StoreFrontApp {
         // a message indicating an invalid product choice.
         if (productChoice >= 1 && productChoice <= products.size()) {
             SalableProduct selectedProduct = products.get(productChoice - 1);
+
+            // Add the selected product to the cart
             cart.addProduct(selectedProduct);
+
+            // Update the server with the new inventory
+            String updateCommand = "U";
+            List<SalableProduct> updatedInventory = inventoryManager.getInventory();
+            NetworkClient networkClient = new NetworkClient("localhost", 6666);  // Use the same port as the server
+            networkClient.sendCommand(updateCommand, updatedInventory);
+
+            // Display feedback to the user on the successful purchase
             System.out.println("Purchase completed: " + selectedProduct.getName() + " purchased.");
+
+            // Remove the purchased product from the local inventory
+            inventoryManager.removeFromInventory(selectedProduct, 1);
         } else {
             System.out.println("Invalid product choice.");
         }
-        
+
         // Here we display a message prompting the user to return to
         // the main menu and waits for any key press to simulate
         // going back to the main menu after the purchase process.
@@ -230,6 +243,11 @@ public class StoreFrontApp {
      * @see ShoppingCart
      */
     public static void cancelPurchase(InventoryManager inventoryManager, ShoppingCart cart, Scanner userInput) {
+    	
+    	 String retrieveCommand = "R";
+         NetworkClient networkClientRetrieve = new NetworkClient("localhost", 6666);  // Use the same port as the server
+
+         networkClientRetrieve.sendCommand(retrieveCommand, new ArrayList<>());
     	
     	// We display a message to show the user their current
     	// cart contents using the viewCart() method of the ShoppingCart class.
